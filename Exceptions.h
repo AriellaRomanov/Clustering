@@ -61,4 +61,14 @@ class SizeErr
     long m_b = 0;
 };
 
+class NodeNameErr
+{
+  public:
+    NodeNameErr();
+    NodeNameErr(const std::string& node_name);
+    string what() const;
+  private:
+    std::string name;
+};
+
 #include "Exceptions.hpp"

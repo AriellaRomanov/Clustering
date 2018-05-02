@@ -59,5 +59,5 @@ double UndirectedGraph::GetEdgeWeight(const std::string& node_a, const std::stri
 
 double UndirectedGraph::GetEdgeWeight(const long node_a, const long node_b) const
 {
-  return matrix[node_a][node_b];
+  return matrix(node_a, node_b);
 }

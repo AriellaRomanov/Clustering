@@ -1,4 +1,4 @@
-#include "SymMatrix.h"
+#include "UndirectedGraph.h"
 using mType = double;
 
 int main(int argc, char *argv[])

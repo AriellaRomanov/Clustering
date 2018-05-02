@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Matrix.h"
 
 template <typename T>

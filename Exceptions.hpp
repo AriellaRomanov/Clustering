@@ -133,3 +133,17 @@ string SizeErr::what() const
   string err = "Non-matching sizes: " +  to_string(m_a) + " and " + to_string(m_b);
   return err;
 }
+
+NodeNameErr::NodeNameErr()
+: name("")
+{}
+
+NodeNameErr::NodeNameErr(const std::string& node_name)
+: name(node_name)
+{}
+
+std::string NodeNameErr::what() const
+{
+  std::string err("Node label not found in graph: " + name);
+  return err;
+}
