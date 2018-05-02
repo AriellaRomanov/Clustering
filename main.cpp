@@ -1,4 +1,7 @@
-#include "UndirectedGraph.h"
+#include "kMeans.hpp"
+#include "DistanceKCliques.hpp"
+#include "KernelClustering.hpp"
+#include "StructureClustering.hpp"
 using mType = long;
 
 int main(int argc, char *argv[])
@@ -36,6 +39,10 @@ int main(int argc, char *argv[])
   }
   file.close();
 
-  std::cout << horse_graph << std::endl;
+  kMeans(horse_graph);
+  DistanceKCliques(horse_graph);
+  KernelClustering(horse_graph);
+  StructureClustering(horse_graph);
+
   return 0;
 }
