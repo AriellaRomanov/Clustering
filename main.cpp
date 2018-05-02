@@ -46,7 +46,6 @@ int main(int argc, char *argv[])
   auto distK_clusters = DistanceKCliques(horse_graph, distance_k);
 
   KernelClustering(horse_graph);
-  StructureClustering(horse_graph);
 
   return 0;
 }
