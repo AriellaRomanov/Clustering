@@ -48,9 +48,8 @@ class UndirectedGraph
       {
         for (long col = 0; col < graph.graph_size; col++)
         {
-          double value(0);
+          T value(0);
           is >> value;
-          std::cout << "[" << row << "][" << col << "] = " << value << std::endl;
           graph.matrix(row, col, value);
         }
       }
