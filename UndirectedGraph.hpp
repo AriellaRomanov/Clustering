@@ -1,38 +1,44 @@
 #include "UndirectedGraph.h"
 
-UndirectedGraph::UndirectedGraph(const long size)
+template <typename T>
+UndirectedGraph<T>::UndirectedGraph(const long size)
 : graph_size(size), node_labels(new std::string[size]), matrix(size)
 {
 }
 
-UndirectedGraph::UndirectedGraph(const UndirectedGraph& copy)
+template <typename T>
+UndirectedGraph<T>::UndirectedGraph(const UndirectedGraph<T>& copy)
 : graph_size(copy.GetSize()), node_labels(new std::string[copy.GetSize()]), matrix(copy.GetSize())
 {
   for (long i = 0; i < graph_size; i++)
     node_labels[i] = copy.GetNodeLabel(i);
 }
 
-UndirectedGraph::UndirectedGraph(UndirectedGraph&& source)
+template <typename T>
+UndirectedGraph<T>::UndirectedGraph(UndirectedGraph<T>&& source)
 : graph_size(source.graph_size), node_labels(source.node_labels), matrix(source.matrix)
 {
   source.node_labels = nullptr;
   source.graph_size = 0;
 }
 
-UndirectedGraph::~UndirectedGraph()
+template <typename T>
+UndirectedGraph<T>::~UndirectedGraph()
 {
   delete[] node_labels;
   graph_size = 0;
 }
 
-std::string UndirectedGraph::GetNodeLabel(const long idx) const
+template <typename T>
+std::string UndirectedGraph<T>::GetNodeLabel(const long idx) const
 {
   if (idx > graph_size)
     throw SubscriptErr(idx);
   return node_labels[idx];
 }
 
-long UndirectedGraph::GetNodeFromLabel(const std::string& label) const
+template <typename T>
+long UndirectedGraph<T>::GetNodeFromLabel(const std::string& label) const
 {
   for (long i = 0; i < graph_size; i++)
     if (label == GetNodeLabel(i))
@@ -40,24 +46,28 @@ long UndirectedGraph::GetNodeFromLabel(const std::string& label) const
   throw NodeNameErr(label);
 }
 
-bool UndirectedGraph::DoesEdgeExist(const std::string& node_a, const std::string& node_b) const
+template <typename T>
+bool UndirectedGraph<T>::DoesEdgeExist(const std::string& node_a, const std::string& node_b) const
 {
   return (GetEdgeWeight(node_a, node_b) != 0);
 }
 
-bool UndirectedGraph::DoesEdgeExist(const long node_a, const long node_b) const
+template <typename T>
+bool UndirectedGraph<T>::DoesEdgeExist(const long node_a, const long node_b) const
 {
   return (GetEdgeWeight(node_a, node_b) != 0);
 }
 
-double UndirectedGraph::GetEdgeWeight(const std::string& node_a, const std::string& node_b) const
+template <typename T>
+double UndirectedGraph<T>::GetEdgeWeight(const std::string& node_a, const std::string& node_b) const
 {
   long a = GetNodeFromLabel(node_a);
   long b = GetNodeFromLabel(node_b);
   return GetEdgeWeight(a, b);
 }
 
-double UndirectedGraph::GetEdgeWeight(const long node_a, const long node_b) const
+template <typename T>
+double UndirectedGraph<T>::GetEdgeWeight(const long node_a, const long node_b) const
 {
   return matrix(node_a, node_b);
 }
