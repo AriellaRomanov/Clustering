@@ -97,7 +97,7 @@ SymMatrix<T> UndirectedGraph<T>::GetDistanceMatrix() const
     {
       for (long j = 0; j < graph_size; j++)
       {
-        if (distances(i, j) > distances(i, k) + distances(k, j)
+        if ((distances(i, j) > distances(i, k) + distances(k, j) || distances(i, j) == infinity)
             && distances(i, k) != infinity
             && distances(k, j) != infinity)
         {

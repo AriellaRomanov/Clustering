@@ -131,14 +131,15 @@ void AssignClusters(const UndirectedGraph<T>& graph, const SymMatrix<T>& distanc
     for (const auto& c : clusters)
     {
       auto distance = distance_matrix(c.first, i);
-      if (distance < min_dist && (distance != -1 || min_dist == -1))
+      if (distance != -1 && (distance < min_dist || min_dist == -1))
       {
         min_dist = distance;
         closest_centroid = c.first;
       }
     }
 
-    clusters[closest_centroid].insert(i);
+    if (closest_centroid != -1)
+      clusters[closest_centroid].insert(i);
   }
 
   bool made_change = false;
@@ -173,13 +174,13 @@ void AssignClusters(const UndirectedGraph<T>& graph, const SymMatrix<T>& distanc
           }
         }
 
-        long closest_centroid = -1;
-        T min_dist = -1;
+        long closest_centroid = old_centroid;
+        T min_dist = distance_matrix(old_centroid, i);
 
         for (const auto& c : clusters)
         {
           auto distance = distance_matrix(c.first, i);
-          if (distance < min_dist && (distance != -1 || min_dist == -1))
+          if (distance != -1 && (distance < min_dist || min_dist == -1))
           {
             min_dist = distance;
             closest_centroid = c.first;
@@ -199,15 +200,13 @@ void AssignClusters(const UndirectedGraph<T>& graph, const SymMatrix<T>& distanc
 template <typename T>
 std::map<long, Cluster> kMeans(const UndirectedGraph<T>& graph, const long cluster_count)
 {
-  std::cout << "kMeans on graph size " << graph.GetSize() << std::endl;
   auto distance_matrix = graph.GetDistanceMatrix();
-  std::cout << "kMeans: DistanceMatrix calculated" << std::endl;
   auto clusters = DetermineCentroids(graph, distance_matrix, cluster_count);
-  std::cout << "kMeans: Starting centroids calculated" << std::endl;
+
   for (auto itr = clusters.begin(); itr != clusters.end(); ++itr)
     itr->second.clear();
 
   AssignClusters(graph, distance_matrix, clusters);
-  std::cout << "kMeans: Clusters calculated" << std::endl;
+
   return clusters;
 }
