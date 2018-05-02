@@ -1,6 +1,6 @@
 template <typename T>
 SymMatrix<T>::SymMatrix(const long size)
-: m_size(size), m_data(new Vector<T>[m_size]), m_zero(0)
+: m_size(size), m_data(new Vector<T>[size]), m_zero(0)
 {
   for (long i = 0; i < m_size; i++)
     m_data[i] = Vector<T>(m_size - i);
@@ -8,7 +8,7 @@ SymMatrix<T>::SymMatrix(const long size)
 
 template <typename T>
 SymMatrix<T>::SymMatrix(const SymMatrix<T>& copy)
-: m_size(copy.GetSize()), m_data(new Vector<T>[m_size]), m_zero(copy.GetTolerance())
+: m_size(copy.GetSize()), m_data(new Vector<T>[copy.GetSize()]), m_zero(copy.GetTolerance())
 {
   for (long i = 0; i < m_size; i++)
     m_data[i] = Vector<T>(copy.m_data[i]);
@@ -16,7 +16,7 @@ SymMatrix<T>::SymMatrix(const SymMatrix<T>& copy)
 
 template <typename T>
 SymMatrix<T>::SymMatrix(const Matrix<T> * copy)
-: m_size(copy->GetSize()), m_data(new Vector<T>[m_size]), m_zero(copy->GetTolerance())
+: m_size(copy->GetSize()), m_data(new Vector<T>[copy->GetSize()]), m_zero(copy->GetTolerance())
 {
   for (long i = 0; i < m_size; i++)
     m_data[i] = Vector<T>(m_size - i);
@@ -30,6 +30,7 @@ template <typename T>
 SymMatrix<T>::~SymMatrix()
 {
   delete[] m_data;
+  m_size = 0;
 } 
 
 template <typename T>
@@ -232,7 +233,16 @@ Matrix<T>& SymMatrix<T>::operator-=(const Matrix<T>& rhs)
 template <typename T>
 Matrix<T>& SymMatrix<T>::operator=(const Matrix<T>& rhs)
 {
+  auto old_size = m_size;
   m_size = rhs.GetSize();
+  if (m_size != old_size)
+  {
+    delete[] m_data;
+    m_data = new Vector<T>[m_size];
+    for (long i = 0; i < m_size; i++)
+      m_data[i] = Vector<T>(m_size - i);
+  }
+
   m_zero = rhs.GetTolerance();
   for (long i = 0; i < m_size; i++)
     for (long j = 0; j < m_size; j++)
@@ -243,7 +253,16 @@ Matrix<T>& SymMatrix<T>::operator=(const Matrix<T>& rhs)
 template <typename T>
 SymMatrix<T>& SymMatrix<T>::operator=(const SymMatrix<T>& rhs)
 {
+  auto old_size = m_size;
   m_size = rhs.GetSize();
+  if (m_size != old_size)
+  {
+    delete[] m_data;
+    m_data = new Vector<T>[m_size];
+    for (long i = 0; i < m_size; i++)
+      m_data[i] = Vector<T>(m_size - i);
+  }
+
   m_zero = rhs.GetTolerance();
   for (long i = 0; i < m_size; i++)
     for (long j = 0; j < m_size; j++)

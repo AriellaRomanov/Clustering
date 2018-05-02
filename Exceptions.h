@@ -5,68 +5,74 @@
 #include <string>
 using namespace std;
 
+class MatrixErr
+{
+  public:
+    virtual string what() const = 0;
+};
+
 template <typename T>
-class RangeErr
+class RangeErr : public MatrixErr
 {
   public:
     RangeErr();
     RangeErr(const T i);
     T& BadRange() const;
-    string what() const;
+    virtual string what() const;
   private:
     T index = NULL;
 };
 
-class DiagDomErr
+class DiagDomErr : public MatrixErr
 {
   public:
     DiagDomErr();
-    string what() const;
+    virtual string what() const;
 };
 
-class PosSemiDefErr
+class PosSemiDefErr : public MatrixErr
 {
   public:
     PosSemiDefErr();
-    string what() const;
+    virtual string what() const;
 };
 
-class SubscriptErr
+class SubscriptErr : public MatrixErr
 {
   public:
     SubscriptErr();
     SubscriptErr(const long i = -1);
     long& BadSubscript();
-    string what() const;
+    virtual string what() const;
   private:
     long index = -1;
 };
 
-class DivByZeroErr
+class DivByZeroErr : public MatrixErr
 {
   public:
     DivByZeroErr();
-    string what() const;
+    virtual string what() const;
   private:
 };
 
-class SizeErr
+class SizeErr : public MatrixErr
 {
   public:
     SizeErr();
     SizeErr(const long a, const long b);
-    string what() const;
+    virtual string what() const;
   private:
     long m_a = 0;
     long m_b = 0;
 };
 
-class NodeNameErr
+class NodeNameErr : public MatrixErr
 {
   public:
     NodeNameErr();
     NodeNameErr(const std::string& node_name);
-    string what() const;
+    virtual string what() const;
   private:
     std::string name;
 };

@@ -1,5 +1,5 @@
 #include "UndirectedGraph.h"
-using mType = double;
+using mType = long;
 
 int main(int argc, char *argv[])
 {
@@ -23,22 +23,19 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  // the first number is the number of Vectors
-  long num_rows;
-  file >> num_rows;
-  SymMatrix<mType> sym_matrix(num_rows);
+  // create the graph
+  UndirectedGraph<mType> horse_graph(1);
   try
   {
-    file >> sym_matrix;
+    file >> horse_graph;
   }
-  catch (RangeErr<mType>& err)
+  catch (MatrixErr& err)
   {
     cout << err.what() << endl;
     return 1;
   }
-
   file.close();
 
-  std::cout << sym_matrix << std::endl;
+  std::cout << horse_graph << std::endl;
   return 0;
 }

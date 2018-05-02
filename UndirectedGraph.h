@@ -31,7 +31,7 @@ class UndirectedGraph
       return os;
     }
 
-    friend ifstream& operator>>(ifstream& is, UndirectedGraph& graph)
+    friend ifstream& operator>>(ifstream& is, UndirectedGraph<T>& graph)
     {
       long old_size = graph.graph_size;
       is >> graph.graph_size;
@@ -43,13 +43,14 @@ class UndirectedGraph
       for (long i = 0; i < graph.graph_size; i++)
         is >> graph.node_labels[i];
 
-      graph.matrix = SymMatrix<double>(graph.graph_size);
+      graph.matrix = SymMatrix<T>(graph.graph_size);
       for (long row = 0; row < graph.graph_size; row++)
       {
         for (long col = 0; col < graph.graph_size; col++)
         {
           double value(0);
           is >> value;
+          std::cout << "[" << row << "][" << col << "] = " << value << std::endl;
           graph.matrix(row, col, value);
         }
       }
