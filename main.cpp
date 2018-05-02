@@ -39,7 +39,8 @@ int main(int argc, char *argv[])
   }
   file.close();
 
-  kMeans(horse_graph);
+  const long cluster_count = 3;
+  kMeans(horse_graph, cluster_count);
   DistanceKCliques(horse_graph);
   KernelClustering(horse_graph);
   StructureClustering(horse_graph);

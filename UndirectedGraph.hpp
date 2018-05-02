@@ -71,3 +71,41 @@ double UndirectedGraph<T>::GetEdgeWeight(const long node_a, const long node_b) c
 {
   return matrix(node_a, node_b);
 }
+
+template <typename T>
+SymMatrix<T> UndirectedGraph<T>::GetDistanceMatrix() const
+{
+  const T infinity = -1;
+
+  SymMatrix<T> distances(graph_size);
+  for (long row = 0; row < graph_size; row++)
+  {
+    for (long col = 0; col <= row; col++)
+    {
+      T value = matrix(row, col);
+      if (col == row)
+        value = 0;
+      else if (value == 0)
+        value = infinity;
+      distances(row, col, value);
+    }
+  }
+
+  for (long k = 0; k < graph_size; k++)
+  {
+    for (long i = 0; i < graph_size; i++)
+    {
+      for (long j = 0; j < graph_size; j++)
+      {
+        if (distances(i, j) > distances(i, k) + distances(k, j)
+            && distances(i, k) != infinity
+            && distances(k, j) != infinity)
+        {
+          distances(i, j, (distances(i, k) + distances(k, j)));
+        }
+      }
+    }
+  }
+
+  return distances;
+}

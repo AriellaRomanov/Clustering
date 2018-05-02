@@ -21,6 +21,7 @@ class UndirectedGraph
     bool DoesEdgeExist(const long node_a, const long node_b) const;
     double GetEdgeWeight(const std::string& node_a, const std::string& node_b) const;
     double GetEdgeWeight(const long node_a, const long node_b) const;
+    SymMatrix<T> GetDistanceMatrix() const;
 
     friend ostream& operator<<(ostream& os, const UndirectedGraph& graph)
     {
