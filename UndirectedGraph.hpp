@@ -73,6 +73,15 @@ double UndirectedGraph<T>::GetEdgeWeight(const long node_a, const long node_b) c
 }
 
 template <typename T>
+long UndirectedGraph<T>::GetDegree(const long idx) const
+{
+  long degree = 0;
+  for (long col = 0; col < graph_size; col++)
+    degree += ((matrix(idx, col) != 0) ? 1 : 0);
+  return degree;
+}
+
+template <typename T>
 SymMatrix<T> UndirectedGraph<T>::GetDistanceMatrix() const
 {
   const T infinity = -1;

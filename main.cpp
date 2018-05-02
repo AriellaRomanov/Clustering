@@ -41,7 +41,10 @@ int main(int argc, char *argv[])
 
   const long cluster_count = 3;
   auto kmeans_clusters = kMeans(horse_graph, cluster_count);
-  DistanceKCliques(horse_graph);
+
+  const long distance_k = 10;
+  auto distK_clusters = DistanceKCliques(horse_graph, distance_k);
+
   KernelClustering(horse_graph);
   StructureClustering(horse_graph);
 
