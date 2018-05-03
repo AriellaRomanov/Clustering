@@ -16,15 +16,15 @@ std::map<long, Cluster> InitialClustering(const UndirectedGraph<T>& graph)
   {
     cluster_count++;
 
-    long node = *node_ids.begin();
-    long node_degree = graph.GetDegree(node);
+    long node = -1;
+    long node_deg = 0;
     for (const auto& n : node_ids)
     {
-      long deg = graph.GetDegree(n);
-      if (deg > node_degree)
+      auto deg = graph.GetDegree(n);
+      if (node == -1 || deg > node_deg)
       {
-        node_degree = deg;
         node = n;
+        node_deg = deg;
       }
     }
 
@@ -33,10 +33,14 @@ std::map<long, Cluster> InitialClustering(const UndirectedGraph<T>& graph)
 
     for (long i = 0; i < graph.GetSize(); i++)
     {
-      if (i != node && graph.DoesEdgeExist(node, i))
+      if (graph.DoesEdgeExist(node, i))
       {
-        clusters[cluster_count].insert(i);
-        node_ids.erase(i);
+        auto itr = node_ids.find(i);
+        if (itr != node_ids.end())
+        {
+          clusters[cluster_count].insert(i);
+          node_ids.erase(i);
+        }
       }
     }
     
@@ -102,6 +106,7 @@ std::map<long, Cluster> DistanceKCliques(const UndirectedGraph<T>& graph, const 
 {
   auto clusters = InitialClustering(graph);
   auto bridges = GetBridgeNodes(graph, clusters);
+  long cluster_count = clusters.size() + 1;
 
   bool cluster_list_non_empty = false;
   do
@@ -206,8 +211,7 @@ std::map<long, Cluster> DistanceKCliques(const UndirectedGraph<T>& graph, const 
 
       if (combined_diameter <= distance_k)
       {
-        long cluster_count = clusters.size() + 1;
-        clusters[cluster_count] = combined_cluster;
+        clusters[cluster_count++] = combined_cluster;
         for (auto& cl : cluster_list)
           clusters.erase(cl);
 
@@ -225,7 +229,7 @@ std::map<long, Cluster> DistanceKCliques(const UndirectedGraph<T>& graph, const 
           }
 
           if (removal_made && combined_diameter < distance_k)
-            bridge.second.insert(cluster_count);
+            bridge.second.insert(cluster_count++);
         }
 
         if (combined_diameter == distance_k)
@@ -266,7 +270,6 @@ std::map<long, Cluster> DistanceKCliques(const UndirectedGraph<T>& graph, const 
         }
       }
     }
-
   } while (cluster_list_non_empty);
 
   for (auto itr = clusters.begin(); itr != clusters.end(); ++itr)
@@ -278,5 +281,13 @@ std::map<long, Cluster> DistanceKCliques(const UndirectedGraph<T>& graph, const 
     }
   }
 
-  return clusters;
+  auto distances = graph.GetDistanceMatrix();
+  std::map<long, Cluster> adj_clusters;
+  for (auto& cl : clusters)
+  {
+    auto centroid = GetCentralNode(distances, cl.second);
+    adj_clusters[centroid] = cl.second;
+    adj_clusters[centroid].insert(centroid);
+  }
+  return adj_clusters;
 }

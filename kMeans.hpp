@@ -4,28 +4,6 @@
 #include <tuple>
 
 template <typename T>
-long GetCentralNode(const SymMatrix<T>& distances, const std::set<long>& node_group)
-{
-  long node = -1;
-  long centrality = 0;
-
-  for (const auto& n : node_group)
-  {
-    double closeness = 0;
-    for (long i = 0; i < distances.GetSize(); i++)
-      closeness += (1.0 / distances(i, n));
-
-    if (closeness > centrality || node == -1)
-    {
-      centrality = closeness;
-      node = n;
-    }
-  }
-
-  return node;
-}
-
-template <typename T>
 long ClosestNode(const SymMatrix<T>& distances, const std::set<long>& node_group, const std::set<long>& nodes_to_ignore)
 {
   long closest_node = -1;

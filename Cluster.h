@@ -4,6 +4,28 @@
 using Cluster = std::set<long>;
 
 template <typename T>
+long GetCentralNode(const SymMatrix<T>& distances, const Cluster& cluster)
+{
+  long node = -1;
+  long centrality = 0;
+
+  for (const auto& n : cluster)
+  {
+    double closeness = 0;
+    for (long i = 0; i < distances.GetSize(); i++)
+      closeness += (1.0 / distances(i, n));
+
+    if (closeness > centrality || node == -1)
+    {
+      centrality = closeness;
+      node = n;
+    }
+  }
+
+  return node;
+}
+
+template <typename T>
 double ClusterDensity(const UndirectedGraph<T>& graph, const Cluster& cluster)
 {
   double edge_count = 0;
@@ -33,9 +55,12 @@ void OutputClusterInformation(const UndirectedGraph<T>& graph, const std::map<lo
 {
   std::cout << "Cluster count: " << clusters.size() << std::endl << std::endl;
   
+  long sum_nodes = 0;
   long count = 0;
   for (const auto& cl : clusters)
   {
+    sum_nodes += cl.second.size();
+
     std::cout << "Cluster ID: " << count++ << std::endl;
     std::cout << "Centroid Node: " << cl.first << ", Centroid Node Label: " << graph.GetNodeLabel(cl.first) << std::endl;
     std::cout << "Cluster Size: " << cl.second.size() << std::endl;
@@ -46,4 +71,6 @@ void OutputClusterInformation(const UndirectedGraph<T>& graph, const std::map<lo
       std::cout << "  " << n << "/" << graph.GetNodeLabel(n) << std::endl;
     std::cout << std::endl << std::endl;
   }
+
+  std::cout << "TOTAL NODES: " << sum_nodes << std::endl;
 }
