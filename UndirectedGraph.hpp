@@ -8,7 +8,7 @@ UndirectedGraph<T>::UndirectedGraph(const long size)
 
 template <typename T>
 UndirectedGraph<T>::UndirectedGraph(const UndirectedGraph<T>& copy)
-: graph_size(copy.GetSize()), node_labels(new std::string[copy.GetSize()]), matrix(copy.GetSize())
+: graph_size(copy.GetSize()), node_labels(new std::string[copy.GetSize()]), matrix(copy.matrix)
 {
   for (long i = 0; i < graph_size; i++)
     node_labels[i] = copy.GetNodeLabel(i);
@@ -70,6 +70,12 @@ template <typename T>
 double UndirectedGraph<T>::GetEdgeWeight(const long node_a, const long node_b) const
 {
   return matrix(node_a, node_b);
+}
+
+template <typename T>
+void UndirectedGraph<T>::SetEdgeWeight(const long node_a, const long node_b, const T weight)
+{
+  matrix(node_a, node_b, weight);
 }
 
 template <typename T>
