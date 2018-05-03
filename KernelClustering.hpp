@@ -85,6 +85,7 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
 
   while (static_cast<long>(versions.size()) > 0)
   {
+    //std::cout << "-----REFINING-----" << std::endl;
     // expand graph
     auto old_graph = current_graph;
     current_graph = versions.back();
@@ -96,20 +97,21 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
       for (auto& cl : new_clusters)
         cl.second.clear();
 
-      for (long i = 0; i < current_graph.graph.GetSize(); i++)
+      for (long supernode = 0; supernode < static_cast<long>(old_graph.merges.size()); supernode++)
       {
-        // get the node id of the supernode it was in
-        long supernode = -1;
-        for (long j = 0; j < static_cast<long>(old_graph.merges.size()) && supernode == -1; j++)
-          if (i == old_graph.merges.at(j).first || i == old_graph.merges.at(j).second)
-            supernode = j;
+        auto node_a = old_graph.merges.at(supernode).first;
+        auto node_b = old_graph.merges.at(supernode).second;
+        //std::cout << supernode << "->(" << node_a << "," << node_b << ")" << std::endl;
 
         // get the cluster id for the supernode
         for (const auto& cl : starting_clusters)
         {
           auto itr = cl.second.find(supernode);
           if (itr != cl.second.end())
-            new_clusters[cl.first].insert(i);
+          {
+            new_clusters[cl.first].insert(node_a);
+            new_clusters[cl.first].insert(node_b);
+          }
         }
       }
     }
@@ -125,6 +127,7 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
 template <typename T>
 std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long cluster_count)
 {
+  std::cout << "-----COARSENING(" << graph.GetSize() << ")-----" << std::endl;
   std::vector<gVersion<T>> versions;
   gVersion<T> _v;
   _v.graph = graph;
@@ -138,38 +141,35 @@ std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long 
   while (static_cast<long>(unmarked_nodes.size()) > 0)
   {
     long idx = rand() % static_cast<long>(unmarked_nodes.size());
-    auto itr = unmarked_nodes.begin();
-    std::advance(itr, idx);
-    idx = *itr;
+    auto n_itr = unmarked_nodes.begin();
+    std::advance(n_itr, idx);
+    long node = *n_itr;
 
-    std::set<long> neighbors;
+    std::set<long> node_neighbors;
     for (long i = 0; i < graph.GetSize(); i++)
-      if (graph.DoesEdgeExist(idx, i))
-        neighbors.insert(i);
-
-    for (auto itr = neighbors.begin(); itr != neighbors.end() && static_cast<long>(neighbors.size()) > 0; ++itr)
     {
-      auto n_id = *itr;
-      auto umn_itr = unmarked_nodes.find(n_id);
-      if (umn_itr == unmarked_nodes.end())
+      if (graph.DoesEdgeExist(node, i))
       {
-        neighbors.erase(itr);
-        itr = neighbors.begin();
+        auto itr = unmarked_nodes.find(i);
+        if (itr != unmarked_nodes.end())
+          node_neighbors.insert(i);
       }
     }
 
-    if (static_cast<long>(neighbors.size()) == 0)
+    //std:cout << "node_neighbors: " << node_neighbors.size() << std::endl;
+    if (static_cast<long>(node_neighbors.size()) == 0)
     {
-      merged_nodes.emplace_back(idx, idx);
+      //std::cout << "(" << node << "," << node << ")->" << merged_nodes.size() << std::endl;
+      merged_nodes.emplace_back(node, node);
     }
     else
     {
       long max_neighbor = -1;
       double max_eq = 0;
 
-      for (const auto& n : neighbors)
+      for (const auto& n : node_neighbors)
       {
-        double eq = 2 * graph.GetEdgeWeight(idx, n);
+        double eq = graph.GetEdgeWeight(node, n);
         if (eq > max_eq || max_neighbor == -1)
         {
           max_neighbor = n;
@@ -177,10 +177,11 @@ std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long 
         }
       }
 
-      merged_nodes.emplace_back(idx, max_neighbor);
+      //std::cout << "(" << node << "," << max_neighbor << ")->" << merged_nodes.size() << std::endl;
+      merged_nodes.emplace_back(node, max_neighbor);
       unmarked_nodes.erase(max_neighbor);
     }
-    unmarked_nodes.erase(idx);
+    unmarked_nodes.erase(node);
   }
 
   UndirectedGraph<T> next_graph(static_cast<long>(merged_nodes.size()));
@@ -228,7 +229,7 @@ std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long 
     }
   }
 
-  if (next_graph.GetSize() <= 4 * cluster_count)
+  if (next_graph.GetSize() <= 2 * cluster_count)
   {
     gVersion<T> ver;
     ver.graph = next_graph;
@@ -238,8 +239,12 @@ std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long 
   else
   {
     auto next_versions = Coarsening(next_graph, cluster_count);
-    for (auto& v : next_versions)
-      versions.emplace_back(v);
+    for (long i = 0; i < static_cast<long>(next_versions.size()); i++)
+    {
+      if (i == 0)
+        next_versions.at(i).merges = merged_nodes;
+      versions.emplace_back(next_versions.at(i));
+    }
   }
 
   return versions;
@@ -252,8 +257,28 @@ std::map<long, Cluster> KernelClustering(const UndirectedGraph<T>& graph, const 
   auto clusters = kMeans(versions.back().graph, cluster_count);
   clusters = Refinement(versions, clusters);
 
+  long _nnodes = 0;
+  for (const auto& _cl_ : clusters)
+    for (const auto& _nn : _cl_.second)
+      _nnodes++;
+  //std::cout << "R1: " << _nnodes << std::endl;
+
+  // for (auto itr = clusters.begin(); itr != clusters.end(); ++itr)
+  // {
+  //   if (itr->second.size() == 0)
+  //   {
+  //     clusters.erase(itr);
+  //     itr = clusters.begin();
+  //   }
+  // }
   for (auto& cl : clusters)
     cl.second.insert(cl.first);
+
+  _nnodes = 0;
+  for (const auto& _cl_ : clusters)
+    for (const auto& _nn : _cl_.second)
+      _nnodes++;
+  //std::cout << "R2: " << _nnodes << std::endl;
 
   return clusters;
 }

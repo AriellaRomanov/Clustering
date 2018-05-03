@@ -41,11 +41,10 @@ int main(int argc, char *argv[])
 
   const long cluster_count = 8;
   auto kmeans_clusters = kMeans(horse_graph, cluster_count);
+  auto kernel_clusters = KernelClustering(horse_graph, cluster_count);
 
   const long distance_k = 10;
   auto distK_clusters = DistanceKCliques(horse_graph, distance_k);
-
-  auto kernel_clusters = KernelClustering(horse_graph, cluster_count);
 
   std::cout << "Cluster Information for kMeans Algorithm:" << std::endl;
   OutputClusterInformation(horse_graph, kmeans_clusters);
