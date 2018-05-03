@@ -50,17 +50,8 @@ The program was designed in a combination of the object-oriented method and the 
 \subsection{Class Objects}
 The driving force of the program is a UndirectedGraph class, which is built from a SymmetricalMatrix class. The data is represented as an undirected graph because the project is looking for relationships between the horses, and we do not care about which horse is the parent. This then allows us to use a SymmetricalMatrix class, which is much more memory efficient to use than a full matrix class would be, as only either the upper or lower triangle of the matrix actually needs to be stored.
 \newline\newline
-While C++ has a basic vector class, it does not have any linear algebra functions attached to that class. Instead, a custom vector class was developed for use, which the basic Matrix class was then built on top of. This combination allows for full flexibility to implement any of the needed linear algebra operations directly into the class. This was designed to be used by a spectral clustering algorithm, but that algorithm has instead been removed from the scope of this project. The SymmetricalMatrix class inherits from the Matrix class, but was given more efficient memory management, to take advantage of the fact the half of the values in the matrix are identical.
+While C++ has a basic vector class, it does not have any linear algebra functions attached to that class. Instead, a custom vector class was developed for use, which the basic Matrix class was then built on top of. This combination allows for full flexibility to implement any of the needed linear algebra operations directly into the class. This was designed to be used by a spectral clustering algorithm, but that algorithm has instead been removed from the scope of this project. The SymmetricalMatrix class inherits from the Matrix class, but was given more efficient memory management, to take advantage of the fact the half of the values in the matrix are identical. A simple UML diagram for the relationship between the custom classes exists in Appendix \ref{appendix:uml}.
 \newline\newline
-
-\begin{figure}[!htb]
-\begin{center}
-	\includegraphics[height=10em]{uml.png}
-	\caption{UML Diagram for Relationships between Class Types}
-	\label{uml}
-\end{center}
-\end{figure}
-
 The UndirectedGraph class includes a SymmetricalMatrix object as a private member. This matrix is used to store the adjacency matrix of the undirected graph. The advantage to this method is realized in very dense graphs, as it becomes more efficient to store and to work with than other representations, which often involve long lists of node id pairs. Unfortunately, the graph used in the testing was not a particularly dense graph, and so this particular benefit did not come to light. However, dense graphs are a prioritized area of interest in the data mining field, and so it was important to consider that beyond this project.
 \newline\newline
 The C++ data type std::set was chosen to represent the clusters within the functional algorithms. The class type has a strict enforcement of no duplication within a set and supports simple insertion, deletion, and search operators. Each node was represented in the cluster by it's id in the original graph, not by it's string label, which is more efficient as string operations are cumbersome and slow.
@@ -68,10 +59,18 @@ The C++ data type std::set was chosen to represent the clusters within the funct
 \subsection{Algorithms}
 
 \subsubsection{K-Means}
-The k-means function was broken into five different sub-functions. This helps improve readability of the code and allowed some sections to be reused for the other algorithms. The pseudo-code for the k-means algorithm is represented in Appendix \ref{appendix:kmeans} and the pseudo-code for the k-means centroid initialization is presented in Appendix \ref{appendix:kmeansinit}\cite{kmeans}.
+The k-means function was broken into five different sub-functions. This helps improve readability of the code and allowed some sections to be reused for the other algorithms. The pseudo-code for the k-means algorithm is represented in Appendix \ref{appendix:kmeans} and the pseudo-code for the k-means centroid initialization is presented in Appendix \ref{appendix:kmeansinit} \cite{kmeans}.
 
 \subsubsection{Distance-K}
+
+
 \subsubsection{Kernel Clustering}
+Kernel clustering is done in three steps. The first step is coarsening the data. This step lends itself well to recursion, as each level of coarseness does not need to know about any previous or next level. \newline\newline
+The second step is initial clustering. Since any clustering method can be done here, k-means was selected for this project. While k-means is reliable, it does potentially change the data quality. It would have been more complete to run the Kernel Clustering algorithm twice, once with k-means and once with distance-k, or to have selected a third clustering algorithm entirely for kernel clustering.
+\newline\newline
+The third step of the algorithm is refinement. This requires a memory of the different levels of coarseness, in order to step back through them. Unfortunately, we did not think of a better way to solve this issue other than to hold in memory the different graphs created and a record of how the nodes were merged to reach that step. For large graphs, this could be a prohibitive amount of memory, especially with many iterations of coarsening.
+\newline\newline
+At each level of refinement of nodes, the clusters are also refined. The algorithm presented for this was a modified k-means algorithm \cite{kmeans}, which is expected to converge quickly at every iteration because the centroids received a good initialization due to the coarsening steps. The pseudo-code for the refinement of the clusters can be found in Appendix \ref{appendix:kernel_kmeans}.
 
 \newpage
 \section{Experimental Results}
@@ -81,6 +80,17 @@ The k-means function was broken into five different sub-functions. This helps im
 \appendixpage
 \addappheadtotoc
 
+\section{UML Diagram for Custom Classes}
+\label{appendix:uml}
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[height=10em]{uml.png}
+	\caption{UML Diagram for Relationships between Class Types}
+	\label{uml}
+\end{center}
+\end{figure}
+
+\newpage
 \section{Pseudo-Code for the K-Means Algorithm}
 \label{appendix:kmeans}
 \begin{figure}[!htb]
@@ -96,8 +106,19 @@ The k-means function was broken into five different sub-functions. This helps im
 \label{appendix:kmeansinit}
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[height=25em]{kmeans_init.png}
+	\includegraphics[height=30em]{kmeans_init.png}
 	\caption{Pseudo-Code for the K-Means Cluster Initialization Algorithm}
+	\label{uml}
+\end{center}
+\end{figure}
+
+\newpage
+\section{Pseudo-Code for the Kernel K-Means Refinement Algorithm}
+\label{appendix:kernel_kmeans}
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[height=30em]{kernel_kmeans.png}
+	\caption{Pseudo-Code for the Kernel K-Means Refinement Algorithm}
 	\label{uml}
 \end{center}
 \end{figure}
