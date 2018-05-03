@@ -1,0 +1,441 @@
+Cluster Information for kMeans Algorithm:
+Cluster count: 8
+
+Cluster ID: 0
+Centroid Node: 34, Centroid Node Label: Gata
+Cluster Size: 5
+Cluster Density: 0.4
+Cluster Maximum Shortest Path: 3
+Cluster Nodes (ID/Label):
+  29/TRF_Silver_Bullet
+  30/Missy_Nijahil
+  31/Nigatt
+  33/Niga
+  34/Gata
+
+
+Cluster ID: 1
+Centroid Node: 36, Centroid Node Label: Mis_Misty
+Cluster Size: 3
+Cluster Density: 0.666667
+Cluster Maximum Shortest Path: 2
+Cluster Nodes (ID/Label):
+  32/Pompeys_Misty
+  35/Gay_Pompey
+  36/Mis_Misty
+
+
+Cluster ID: 2
+Centroid Node: 48, Centroid Node Label: Highland_Fling
+Cluster Size: 7
+Cluster Density: 0.142857
+Cluster Maximum Shortest Path: 4
+Cluster Nodes (ID/Label):
+  16/RHF_Port_Khairo
+  17/RHF_Lone_Ranger
+  37/Khandace
+  40/Alata_Khemo
+  46/Khemonada
+  47/Baskanada
+  48/Highland_Fling
+
+
+Cluster ID: 3
+Centroid Node: 50, Centroid Node Label: Tornado
+Cluster Size: 4
+Cluster Density: 0.333333
+Cluster Maximum Shortest Path: 4
+Cluster Nodes (ID/Label):
+  38/Alata_Bask
+  39/Sera_Jewel
+  49/Tonada
+  50/Tornado
+
+
+Cluster ID: 4
+Centroid Node: 52, Centroid Node Label: Baskette
+Cluster Size: 9
+Cluster Density: 0.25
+Cluster Maximum Shortest Path: 3
+Cluster Nodes (ID/Label):
+  19/Khemosabi
+  23/Amerigo
+  24/Jurneeka
+  41/Khemarista
+  42/Arista-Bay
+  43/Bay-Sabha
+  44/Khemoniquee
+  51/DW_Khemette
+  52/Baskette
+
+
+Cluster ID: 5
+Centroid Node: 58, Centroid Node Label: Basks_Last_Love
+Cluster Size: 16
+Cluster Density: 0.125
+Cluster Maximum Shortest Path: 7
+Cluster Nodes (ID/Label):
+  0/Bask
+  1/Witraz
+  2/Balalajka
+  7/Aristo_Amy
+  11/Ariston
+  12/TC_Amyka
+  18/MHR_Port_Dawn
+  20/Lamaza
+  21/Port_Bask
+  22/Daunzaria
+  25/Ro_Almaza
+  26/Portulaka
+  27/Daufin
+  28/HMR_Waziria
+  45/Aristo_Sun_Ray
+  58/Basks_Last_Love
+
+
+Cluster ID: 6
+Centroid Node: 61, Centroid Node Label: Starkhana
+Cluster Size: 18
+Cluster Density: 0.124183
+Cluster Maximum Shortest Path: 6
+Cluster Nodes (ID/Label):
+  3/Pensions_Fanfare
+  4/Pension
+  5/Mats_Fancy
+  6/Matrifix
+  8/Zodiac_Matador
+  9/Flight-O-Fancy
+  10/Moniet_Sherie
+  13/Ro_Fanciray
+  14/Rezus
+  15/Mitzi_McCoy
+  53/Matisto
+  54/Matio
+  55/Matadors_Miracle
+  56/Aristo_Miracle
+  57/Matalove
+  59/HH_Matastar
+  60/HH_Zodiahana
+  61/Starkhana
+
+
+Cluster ID: 7
+Centroid Node: 63, Centroid Node Label: Baskhan
+Cluster Size: 2
+Cluster Density: 1
+Cluster Maximum Shortest Path: 1
+Cluster Nodes (ID/Label):
+  62/Starkhan
+  63/Baskhan
+
+
+Cluster Information for Distance-k Algorithm:
+Cluster count: 16
+
+Cluster ID: 0
+Centroid Node: 10, Centroid Node Label: Moniet_Sherie
+Cluster Size: 2
+Cluster Density: 1
+Cluster Maximum Shortest Path: 1
+Cluster Nodes (ID/Label):
+  6/Matrifix
+  10/Moniet_Sherie
+
+
+Cluster ID: 1
+Centroid Node: 13, Centroid Node Label: Ro_Fanciray
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  13/Ro_Fanciray
+
+
+Cluster ID: 2
+Centroid Node: 15, Centroid Node Label: Mitzi_McCoy
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  15/Mitzi_McCoy
+
+
+Cluster ID: 3
+Centroid Node: 25, Centroid Node Label: Ro_Almaza
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  25/Ro_Almaza
+
+
+Cluster ID: 4
+Centroid Node: 26, Centroid Node Label: Portulaka
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  26/Portulaka
+
+
+Cluster ID: 5
+Centroid Node: 28, Centroid Node Label: HMR_Waziria
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  28/HMR_Waziria
+
+
+Cluster ID: 6
+Centroid Node: 34, Centroid Node Label: Gata
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  34/Gata
+
+
+Cluster ID: 7
+Centroid Node: 35, Centroid Node Label: Gay_Pompey
+Cluster Size: 6
+Cluster Density: 0.333333
+Cluster Maximum Shortest Path: 4
+Cluster Nodes (ID/Label):
+  29/TRF_Silver_Bullet
+  30/Missy_Nijahil
+  31/Nigatt
+  32/Pompeys_Misty
+  33/Niga
+  35/Gay_Pompey
+
+
+Cluster ID: 8
+Centroid Node: 36, Centroid Node Label: Mis_Misty
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  36/Mis_Misty
+
+
+Cluster ID: 9
+Centroid Node: 39, Centroid Node Label: Sera_Jewel
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  39/Sera_Jewel
+
+
+Cluster ID: 10
+Centroid Node: 45, Centroid Node Label: Aristo_Sun_Ray
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  45/Aristo_Sun_Ray
+
+
+Cluster ID: 11
+Centroid Node: 51, Centroid Node Label: DW_Khemette
+Cluster Size: 18
+Cluster Density: 0.117647
+Cluster Maximum Shortest Path: 6
+Cluster Nodes (ID/Label):
+  16/RHF_Port_Khairo
+  17/RHF_Lone_Ranger
+  18/MHR_Port_Dawn
+  19/Khemosabi
+  22/Daunzaria
+  23/Amerigo
+  24/Jurneeka
+  27/Daufin
+  37/Khandace
+  40/Alata_Khemo
+  41/Khemarista
+  42/Arista-Bay
+  43/Bay-Sabha
+  44/Khemoniquee
+  46/Khemonada
+  47/Baskanada
+  49/Tonada
+  51/DW_Khemette
+
+
+Cluster ID: 12
+Centroid Node: 55, Centroid Node Label: Matadors_Miracle
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  55/Matadors_Miracle
+
+
+Cluster ID: 13
+Centroid Node: 57, Centroid Node Label: Matalove
+Cluster Size: 1
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+  57/Matalove
+
+
+Cluster ID: 14
+Centroid Node: 62, Centroid Node Label: Starkhan
+Cluster Size: 5
+Cluster Density: 0.4
+Cluster Maximum Shortest Path: 3
+Cluster Nodes (ID/Label):
+  56/Aristo_Miracle
+  59/HH_Matastar
+  60/HH_Zodiahana
+  61/Starkhana
+  62/Starkhan
+
+
+Cluster ID: 15
+Centroid Node: 63, Centroid Node Label: Baskhan
+Cluster Size: 22
+Cluster Density: 0.103896
+Cluster Maximum Shortest Path: 6
+Cluster Nodes (ID/Label):
+  0/Bask
+  1/Witraz
+  2/Balalajka
+  3/Pensions_Fanfare
+  4/Pension
+  5/Mats_Fancy
+  7/Aristo_Amy
+  8/Zodiac_Matador
+  9/Flight-O-Fancy
+  11/Ariston
+  12/TC_Amyka
+  14/Rezus
+  20/Lamaza
+  21/Port_Bask
+  38/Alata_Bask
+  48/Highland_Fling
+  50/Tornado
+  52/Baskette
+  53/Matisto
+  54/Matio
+  58/Basks_Last_Love
+  63/Baskhan
+
+
+Cluster Information for Kernel Clustering Algorithm:
+Cluster count: 6
+
+Cluster ID: 0
+Centroid Node: 5, Centroid Node Label: Mats_Fancy
+Cluster Size: 11
+Cluster Density: 0.218182
+Cluster Maximum Shortest Path: 4
+Cluster Nodes (ID/Label):
+  19/Khemosabi
+  23/Amerigo
+  24/Jurneeka
+  37/Khandace
+  38/Alata_Bask
+  39/Sera_Jewel
+  40/Alata_Khemo
+  41/Khemarista
+  42/Arista-Bay
+  43/Bay-Sabha
+  44/Khemoniquee
+
+
+Cluster ID: 1
+Centroid Node: 8, Centroid Node Label: Zodiac_Matador
+Cluster Size: 18
+Cluster Density: 0.111111
+Cluster Maximum Shortest Path: 8
+Cluster Nodes (ID/Label):
+  16/RHF_Port_Khairo
+  17/RHF_Lone_Ranger
+  18/MHR_Port_Dawn
+  20/Lamaza
+  21/Port_Bask
+  22/Daunzaria
+  25/Ro_Almaza
+  26/Portulaka
+  27/Daufin
+  28/HMR_Waziria
+  29/TRF_Silver_Bullet
+  30/Missy_Nijahil
+  31/Nigatt
+  32/Pompeys_Misty
+  33/Niga
+  34/Gata
+  35/Gay_Pompey
+  36/Mis_Misty
+
+
+Cluster ID: 2
+Centroid Node: 9, Centroid Node Label: Flight-O-Fancy
+Cluster Size: 16
+Cluster Density: 0.15
+Cluster Maximum Shortest Path: 5
+Cluster Nodes (ID/Label):
+  7/Aristo_Amy
+  8/Zodiac_Matador
+  11/Ariston
+  12/TC_Amyka
+  13/Ro_Fanciray
+  45/Aristo_Sun_Ray
+  53/Matisto
+  54/Matio
+  55/Matadors_Miracle
+  56/Aristo_Miracle
+  57/Matalove
+  59/HH_Matastar
+  60/HH_Zodiahana
+  61/Starkhana
+  62/Starkhan
+  63/Baskhan
+
+
+Cluster ID: 3
+Centroid Node: 10, Centroid Node Label: Moniet_Sherie
+Cluster Size: 11
+Cluster Density: 0.2
+Cluster Maximum Shortest Path: 4
+Cluster Nodes (ID/Label):
+  0/Bask
+  1/Witraz
+  2/Balalajka
+  46/Khemonada
+  47/Baskanada
+  48/Highland_Fling
+  49/Tonada
+  50/Tornado
+  51/DW_Khemette
+  52/Baskette
+  58/Basks_Last_Love
+
+
+Cluster ID: 4
+Centroid Node: 11, Centroid Node Label: Ariston
+Cluster Size: 8
+Cluster Density: 0.25
+Cluster Maximum Shortest Path: 5
+Cluster Nodes (ID/Label):
+  3/Pensions_Fanfare
+  4/Pension
+  5/Mats_Fancy
+  6/Matrifix
+  9/Flight-O-Fancy
+  10/Moniet_Sherie
+  14/Rezus
+  15/Mitzi_McCoy
+
+
+Cluster ID: 5
+Centroid Node: 12, Centroid Node Label: TC_Amyka
+Cluster Size: 0
+Cluster Density: nan
+Cluster Maximum Shortest Path: 0
+Cluster Nodes (ID/Label):
+
+
