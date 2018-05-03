@@ -46,7 +46,6 @@ std::vector<UndirectedGraph<T>> Coarsening(UndirectedGraph<T> graph, const long 
 
     if (static_cast<long>(neighbors.size()) == 0)
     {
-      std::cout << "Merging " << idx << " and " << idx << " into " << merged_nodes.size() << std::endl;
       merged_nodes.emplace_back(idx, idx);
     }
     else
@@ -64,7 +63,6 @@ std::vector<UndirectedGraph<T>> Coarsening(UndirectedGraph<T> graph, const long 
         }
       }
 
-      std::cout << "Merging " << idx << " and " << max_neighbor << " into " << merged_nodes.size() << std::endl;
       merged_nodes.emplace_back(idx, max_neighbor);
       unmarked_nodes.erase(max_neighbor);
     }
@@ -87,7 +85,6 @@ std::vector<UndirectedGraph<T>> Coarsening(UndirectedGraph<T> graph, const long 
       if (graph.DoesEdgeExist(mn_b, n))
         neighbors_b.insert(n);
 
-    std::cout << "Looking for " << neighbors_a.size() << " neighbors of " << mn_a << std::endl;
     for (const auto& n : neighbors_a)
     {
       long new_neighbor = -1;
@@ -97,14 +94,11 @@ std::vector<UndirectedGraph<T>> Coarsening(UndirectedGraph<T> graph, const long 
           new_neighbor = j;
       }
 
-      std::cout << "  old neighbor " << n << " found in new neighbor " << new_neighbor << std::endl;
       auto weight = graph.GetEdgeWeight(mn_a, n);
       auto curr_weight = next_graph.GetEdgeWeight(i, new_neighbor);
-      std::cout << "  Setting edge weight: (" << i << "," << new_neighbor << ")=" << curr_weight + weight << std::endl;
       next_graph.SetEdgeWeight(i, new_neighbor, curr_weight + weight);
     }
 
-    std::cout << "Looking for " << neighbors_b.size() << " neighbors of " << mn_b << std::endl;
     for (const auto& n : neighbors_b)
     {
       long new_neighbor = -1;
@@ -114,15 +108,12 @@ std::vector<UndirectedGraph<T>> Coarsening(UndirectedGraph<T> graph, const long 
           new_neighbor = j;
       }
 
-      std::cout << "  old neighbor " << n << " found in new neighbor " << new_neighbor << std::endl;
       auto weight = graph.GetEdgeWeight(mn_b, n);
       auto curr_weight = next_graph.GetEdgeWeight(i, new_neighbor);
-      std::cout << "  Setting edge weight: (" << i << "," << new_neighbor << ")=" << curr_weight + weight << std::endl;
       next_graph.SetEdgeWeight(i, new_neighbor, curr_weight + weight);
     }
   }
 
-  //std::cout << "next_graph.GetSize() = " << next_graph.GetSize() << std::endl;
   if (next_graph.GetSize() <= 4 * cluster_count)
     versions.emplace_back(next_graph);
   else
@@ -140,9 +131,10 @@ std::map<long, Cluster> KernelClustering(const UndirectedGraph<T>& graph, const 
 {
   std::cout << "KernelClustering on graph size " << graph.GetSize() << std::endl;
   auto versions = Coarsening(graph, cluster_count);
-  std::cout << "VersionCount: " << versions.size() << " | Final size: " << versions.back().GetSize() << std::endl;
+  std::cout << "Version count: " << versions.size() << " | Final size: " << versions.back().GetSize() << std::endl;
   auto clusters = kMeans(versions.back(), cluster_count);
+  std::cout << "kMeans Complete." << std::endl;
   clusters = Refinement(versions, clusters);
-  std::cout << "ClusterCount: " << clusters.size() << std::endl;
+  std::cout << "Cluster count: " << clusters.size() << std::endl;
   return clusters;
 }
