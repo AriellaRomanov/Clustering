@@ -27,7 +27,9 @@ The author has earned her Bachelor's of Science degree in Computer Science from 
 \section{Executive Summary}
 This project aims to explore the potential of clustering algorithms for aiding in the partitioning of large graphs for frequent subgraph mining. Partitioning is important as many graphs of interest cannot be held in the memory of a single machine, and so must be spread across many machines in order to be processed. Partitioning risks losing data that spans across multiple partitions, requiring an intelligent partitioning process in order to minimize. 
 \newline\newline
-This project explores k-means clustering, distance-k clustering, and multilevel kernel clustering algorithms, as they apply to partitioning large transaction graphs in data mining. The clusters produced by the algorithms are evaluated for quality based on cluster density and the maximal shortest path within the cluster. The algorithms were tested on a toy data set built from publicly available Arabian horse pedigree papers, such that each edge represents a child-parent relationship. The algorithms were written for undirected, weighted graphs, but could be modified for directed graphs. Furthermore, research needs to be done to create a parallelized or distributed version of these algorithms so that they can process graphs that do not fit within the memory of a single machine.
+This project explores k-means clustering, distance-k clustering, and multilevel kernel clustering algorithms, as they apply to partitioning large transaction graphs in data mining. The clusters produced by the algorithms are evaluated for quality based on cluster density and the maximal shortest path within the cluster. The algorithms were tested on a toy data set built from publicly available Arabian horse pedigree papers, such that each edge represents a child-parent relationship. The algorithms were written for undirected, weighted graphs, but could be modified for directed graphs.
+\newline\newline
+Further research needs to be done to create and evaluate parallelized or distributed versions of these algorithms, so that they can process graphs that do not fit within the memory of a single machine.
 
 \newpage
 \section{Introduction}
@@ -36,9 +38,14 @@ Stuff to say \cite{kernel,distK}.
 \newpage
 \section{Project Specifications}
 This project focuses on comparing the quality of the clusters produced by each algorithm. Quality is a combined score  of the cluster density and the maximum shortest path within the cluster. By comparing the clustering ability of the algorithms on a small graph, inferences about the quality of partitions made on a larger transaction graph can be made. Note that further research should be done into parallelized and distributed versions of these algorithms, but that is beyond the scope of this project.
+\newline\newline
+All code was written in the C++ programming language. The program accepts as input a properly formatted document file that describes the graph to execute. The program outputs the basic statistics of the clusters formed by each of the three algorithms, as well as a list of which nodes are in which cluster. The statistics reported include the number of clusters formed, the number of elements in each cluster, the density of each cluster, and the diameter of each cluster.
+\newline\newline
+In the future, the program should be modified to accept a parameter file that can affect the execution of the program. Parameters of interest would include the number of clusters that the k-means algorithm should search for, and the sigma value for the kernel clustering algorithm.
 
 \newpage
 \section{Detailed Design}
+The drivi
 
 \newpage
 \section{Experimental Results}
