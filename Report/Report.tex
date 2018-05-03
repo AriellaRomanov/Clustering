@@ -39,27 +39,27 @@ This paper is presenting basic research done to examine if clustering could assi
 Graph data mining is a field of study concerned with extracting data from graphs. Most often, this data takes the form of a subgraph that has a structure that makes it interesting.
 
 \subsubsection{Basic Definitions}
-A graph is a set of nodes, V, and a set of edges, E. A graph can have labeled nodes or labeled edges, and both nodes and edges can also have numerical weights. Edges can also be directed edges, which mean that they come from one node and point to another node. They can be likened to a one-way road. For our purposes, we will only be concerning ourselves with undirected graphs.
+A graph is a set of nodes, V, and a set of edges, E. A graph can have labeled nodes or labeled edges, and both nodes and edges can also have numerical weights. Edges can also be directed edges, which mean that they come from one node and point to another node \cite{survey}. They can be likened to a one-way road. For our purposes, we will only be concerning ourselves with undirected graphs.
 \newline\newline
-A path in a graph is a sequence of nodes, such that every node has an edge that connects it to the following node. There can be many such paths between two nodes, but the distance between them is the number of edges that are in the shortest path between them. In a group of nodes, the longest distance between any two nodes (the longest shortest path) is referred to as the diameter of that group of nodes.
+A path in a graph is a sequence of nodes, such that every node has an edge that connects it to the following node. There can be many such paths between two nodes, but the distance between them is the number of edges that are in the shortest path between them. In a group of nodes, the longest distance between any two nodes (the longest shortest path) is referred to as the diameter of that group of nodes \cite{survey}.
 \newline\newline
-Graphs can be categorized as either connected or unconnected graph. If a graph is connected, that means that there exists a path to every node in the graph from every other node in the graph. If a graph is unconnected, then it is composed of multiple connected components, but there doesn't exist a path from one component to the other.
+Graphs can be categorized as either connected or unconnected graph. If a graph is connected, that means that there exists a path to every node in the graph from every other node in the graph. If a graph is unconnected, then it is composed of multiple connected components, but there doesn't exist a path from one component to the other \cite{survey}.
 \newline\newline
 A graph also has a measurable density. Density is measured as
 \newline\newline
 \centerline{2 * $\vert$E$\vert$ / ($\vert$V$\vert$ * ($\vert$V$\vert$ - 1))}
 \newline\newline
-for undirected graphs. They symbol $\vert$x$\vert$ means the number of items in that set. So, $\vert$E$\vert$ would refer to the total number of edges. The number of edges connected to a single node, n, is known as degree and is also marked as deg(n).
+for undirected graphs \cite{survey}. They symbol $\vert$x$\vert$ means the number of items in that set. So, $\vert$E$\vert$ would refer to the total number of edges. The number of edges connected to a single node, n, is known as degree and is also marked as deg(n).
 
 \subsubsection{Frequent Subgraph Mining}
-Frequent subgraph mining (FSM) is a common method for determining which structures in the graph occur most often. There are many different algorithms for doing this, which are out of scope for this project.
+Frequent subgraph mining (FSM) is a common method for determining which structures in the graph occur most often \cite{survey}. There are many different algorithms for doing this, which are out of scope for this project.
 \newline\newline
-There are two overarching categories that a FSM algorithm may fall into. The algorithm is either meant to handle a single graph or a set of transaction graphs. For this project, we will only be concerned with single graphs, with particular interest in graphs which cannot fit within memory of one machine. While the intent of this project could be applied to a single graph from a transaction setting, that is not within the scope of this project.
+There are two overarching categories that a FSM algorithm may fall into. The algorithm is either meant to handle a single graph or a set of transaction graphs \cite{survey}. For this project, we will only be concerned with single graphs, with particular interest in graphs which cannot fit within memory of one machine. While the intent of this project could be applied to a single graph from a transaction setting, that is not within the scope of this project.
 
 \subsection{Graph Partitioning}
-When dealing with a graph that is too large to fit within the memory of a single machine, some mechanism must be devised for dividing the graph among multiple machines. This process is known as graph partitioning.
+When dealing with a graph that is too large to fit within the memory of a single machine, some mechanism must be devised for dividing the graph among multiple machines. This process is known as graph partitioning \cite{partition}.
 \newline\newline
-Partitioning a graph is most frequently done by removing edges from the graph until there are multiple individual connected components. When doing this, it is important to remove as few edges as possible, but also make the partitions close to equal sized. One of the issues with doing a partition is that removing those edges makes it difficult to find frequent subgraphs that may span across multiple partitions.
+Partitioning a graph is most frequently done by removing edges from the graph until there are multiple individual connected components. When doing this, it is important to remove as few edges as possible, but also make the partitions close to equal sized. One of the issues with doing a partition is that removing those edges makes it difficult to find frequent subgraphs that may span across multiple partitions \cite{partition}.
 
 \subsection{Clustering}
 The goal of clustering is to divide a data set into logical groups of things that are similar. One option for defining similarity is distance, which would then allow us to apply clustering to large single graphs that would hopefully give as an approximation of how to partition the data
@@ -201,6 +201,12 @@ J. Edachery, A. Sen, and F. Brandenburg, ``Graph Clustering Using Distance-k Cli
 \bibitem{kmeans} 
 K. Nazeer and M. Sebastian, ``Improving the Accuracy and Efficiency of the k-means Clustering Algorithm,'' 
 \textit{Proceedings of the World Congress on Engineering}. London, U.K.: 2009.
+
+\bibitem{survey} 
+C. Jiang, et. al., ``A Survey of Frequent Subgraph Mining Algorithms,'' University of Liverpool. Liverpool, U.K.
+
+\bibitem{partition}
+Nisar, Fard, and Miller, ``Techniques for Graph Analysis on Big Data,'' 2013.
 
 \end{thebibliography}
 
