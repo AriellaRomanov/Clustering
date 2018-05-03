@@ -1,12 +1,12 @@
 #include "kMeans.hpp"
 #include "DistanceKCliques.hpp"
 #include "KernelClustering.hpp"
-#include "StructureClustering.hpp"
 using mType = long;
 
 int main(int argc, char *argv[])
 {
   /********** variable declarations *******/
+  srand(time(NULL));
 
   /********** file reading ****************/
   // argv[0] is the program name
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
   const long distance_k = 10;
   auto distK_clusters = DistanceKCliques(horse_graph, distance_k);
 
-  KernelClustering(horse_graph);
+  KernelClustering(horse_graph, cluster_count);
 
   return 0;
 }
