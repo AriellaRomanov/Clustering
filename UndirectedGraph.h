@@ -25,6 +25,7 @@ class UndirectedGraph
     void SetEdgeWeight(const long node_a, const long node_b, const T weight);
     long GetDegree(const long idx) const;
     SymMatrix<T> GetDistanceMatrix() const;
+    SymMatrix<T> GetAdjacencyMatrix() const;
 
     friend ostream& operator<<(ostream& os, const UndirectedGraph& graph)
     {

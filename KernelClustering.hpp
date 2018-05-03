@@ -14,7 +14,66 @@ struct gVersion
 template <typename T>
 void RefinementAlgorithm(const UndirectedGraph<T>& graph, std::map<long, Cluster>& starting_clusters)
 {
+  const long max_iterations = 10;
+  const T sigma = 1;
 
+  SymMatrix<T> identity(graph.GetSize());
+  for (long i = 0; i < identity.GetSize(); i++)
+    identity(i, i, sigma);
+
+  SymMatrix<T> kernel_matrix(graph.GetAdjacencyMatrix());
+  kernel_matrix += identity;
+
+  long iteration = 0;
+  while (iteration++ < max_iterations)
+  {
+    std::map<long, std::vector<double>> distances;
+    for (const auto& cl : starting_clusters)
+    {
+      std::vector<double> dists;
+      for (long i = 0; i < kernel_matrix.GetSize(); i++)
+      {
+        double wj = cl.second.size();
+
+        double kij = 0;
+        for (const auto& j : cl.second)
+          kij += kernel_matrix(i, j);
+        kij *= 2;
+
+        double kjl = 0;
+        for (const auto& j : cl.second)
+          for (const auto& l : cl.second)
+            kjl += kernel_matrix(j, l);
+
+        double d = kernel_matrix(i, i) - (kij / wj) + (kjl / (wj * wj));
+        dists.push_back(d);
+      }
+      distances[cl.first] = dists;
+    }
+
+    std::map<long, Cluster> new_clusters = starting_clusters;
+    for (auto& cl : new_clusters)
+      cl.second.clear();
+
+    for (long i = 0; i < kernel_matrix.GetSize(); i++)
+    {
+      long min_cluster = -1;
+      double min_dist = 0;
+      for (const auto& dists : distances)
+      {
+        if (dists.second.at(i) < min_dist || min_cluster == -1)
+        {
+          min_cluster = dists.first;
+          min_dist = dists.second.at(i);
+        }
+      }
+      new_clusters[min_cluster].insert(i);
+    }
+
+    if (new_clusters == starting_clusters)
+      iteration = max_iterations;
+    starting_clusters = new_clusters;
+  }
 }
 
 template <typename T>
@@ -31,8 +90,29 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
     current_graph = versions.back();
     versions.pop_back();
 
+    auto new_clusters = starting_clusters;
+    for (auto& cl : new_clusters)
+      cl.second.clear();
 
+    for (long i = 0; i < current_graph.graph.GetSize(); i++)
+    {
+      // get the node id of the supernode it was in
+      long supernode = -1;
+      for (long j = 0; j < static_cast<long>(old_graph.merges.size()) && supernode == -1; j++)
+        if (i == old_graph.merges.at(j).first || i == old_graph.merges.at(j).second)
+          supernode = j;
 
+      // get the cluster id for the supernode
+      for (const auto& cl : starting_clusters)
+      {
+        auto itr = cl.second.find(supernode);
+        if (itr != cl.second.end())
+          new_clusters[cl.first].insert(i);
+      }
+    }
+    starting_clusters = new_clusters;
+
+    // refine expanded graph clusters
     RefinementAlgorithm(current_graph.graph, starting_clusters);
   }
 

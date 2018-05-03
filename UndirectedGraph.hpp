@@ -136,3 +136,9 @@ SymMatrix<T> UndirectedGraph<T>::GetDistanceMatrix() const
 
   return distances;
 }
+
+template <typename T>
+SymMatrix<T> UndirectedGraph<T>::GetAdjacencyMatrix() const
+{
+  return matrix;
+}
