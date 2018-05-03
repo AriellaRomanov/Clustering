@@ -83,7 +83,7 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
   versions.pop_back();
   RefinementAlgorithm(current_graph.graph, starting_clusters);
 
-  while (static_cast<long>(versions.size())> 0)
+  while (static_cast<long>(versions.size()) > 0)
   {
     // expand graph
     auto old_graph = current_graph;
@@ -91,23 +91,26 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
     versions.pop_back();
 
     auto new_clusters = starting_clusters;
-    for (auto& cl : new_clusters)
-      cl.second.clear();
-
-    for (long i = 0; i < current_graph.graph.GetSize(); i++)
+    if (static_cast<long>(old_graph.merges.size()) > 0)
     {
-      // get the node id of the supernode it was in
-      long supernode = -1;
-      for (long j = 0; j < static_cast<long>(old_graph.merges.size()) && supernode == -1; j++)
-        if (i == old_graph.merges.at(j).first || i == old_graph.merges.at(j).second)
-          supernode = j;
+      for (auto& cl : new_clusters)
+        cl.second.clear();
 
-      // get the cluster id for the supernode
-      for (const auto& cl : starting_clusters)
+      for (long i = 0; i < current_graph.graph.GetSize(); i++)
       {
-        auto itr = cl.second.find(supernode);
-        if (itr != cl.second.end())
-          new_clusters[cl.first].insert(i);
+        // get the node id of the supernode it was in
+        long supernode = -1;
+        for (long j = 0; j < static_cast<long>(old_graph.merges.size()) && supernode == -1; j++)
+          if (i == old_graph.merges.at(j).first || i == old_graph.merges.at(j).second)
+            supernode = j;
+
+        // get the cluster id for the supernode
+        for (const auto& cl : starting_clusters)
+        {
+          auto itr = cl.second.find(supernode);
+          if (itr != cl.second.end())
+            new_clusters[cl.first].insert(i);
+        }
       }
     }
     starting_clusters = new_clusters;
@@ -248,5 +251,9 @@ std::map<long, Cluster> KernelClustering(const UndirectedGraph<T>& graph, const 
   auto versions = Coarsening(graph, cluster_count);
   auto clusters = kMeans(versions.back().graph, cluster_count);
   clusters = Refinement(versions, clusters);
+
+  for (auto& cl : clusters)
+    cl.second.insert(cl.first);
+
   return clusters;
 }
