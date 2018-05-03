@@ -5,17 +5,24 @@
 #include <vector>
 
 template <typename T>
+struct gVersion
+{
+  UndirectedGraph<T> graph;
+  std::vector<std::pair<long, long>> merges;
+};
+
+template <typename T>
 void RefinementAlgorithm(const UndirectedGraph<T>& graph, std::map<long, Cluster>& starting_clusters)
 {
 
 }
 
 template <typename T>
-std::map<long, Cluster> Refinement(std::vector<UndirectedGraph<T>> versions, std::map<long, Cluster> starting_clusters)
+std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<long, Cluster> starting_clusters)
 {
   auto current_graph = versions.back();
   versions.pop_back();
-  RefinementAlgorithm(current_graph, starting_clusters);
+  RefinementAlgorithm(current_graph.graph, starting_clusters);
 
   while (static_cast<long>(versions.size())> 0)
   {
@@ -26,17 +33,19 @@ std::map<long, Cluster> Refinement(std::vector<UndirectedGraph<T>> versions, std
 
 
 
-    RefinementAlgorithm(current_graph, starting_clusters);
+    RefinementAlgorithm(current_graph.graph, starting_clusters);
   }
 
   return starting_clusters;
 }
 
 template <typename T>
-std::vector<UndirectedGraph<T>> Coarsening(UndirectedGraph<T> graph, const long cluster_count)
+std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long cluster_count)
 {
-  std::vector<UndirectedGraph<T>> versions;
-  versions.emplace_back(graph);
+  std::vector<gVersion<T>> versions;
+  gVersion<T> _v;
+  _v.graph = graph;
+  versions.emplace_back(_v);
 
   std::set<long> unmarked_nodes;
   for (long i = 0; i < graph.GetSize(); i++)
@@ -137,7 +146,12 @@ std::vector<UndirectedGraph<T>> Coarsening(UndirectedGraph<T> graph, const long 
   }
 
   if (next_graph.GetSize() <= 4 * cluster_count)
-    versions.emplace_back(next_graph);
+  {
+    gVersion<T> ver;
+    ver.graph = next_graph;
+    ver.merges = merged_nodes;
+    versions.emplace_back(ver);
+  }
   else
   {
     auto next_versions = Coarsening(next_graph, cluster_count);
@@ -153,8 +167,8 @@ std::map<long, Cluster> KernelClustering(const UndirectedGraph<T>& graph, const 
 {
   std::cout << "KernelClustering on graph size " << graph.GetSize() << std::endl;
   auto versions = Coarsening(graph, cluster_count);
-  std::cout << "Version count: " << versions.size() << " | Final size: " << versions.back().GetSize() << std::endl;
-  auto clusters = kMeans(versions.back(), cluster_count);
+  std::cout << "Version count: " << versions.size() << " | Final size: " << versions.back().graph.GetSize() << std::endl;
+  auto clusters = kMeans(versions.back().graph, cluster_count);
   std::cout << "kMeans Complete." << std::endl;
   clusters = Refinement(versions, clusters);
   std::cout << "Cluster count: " << clusters.size() << std::endl;
