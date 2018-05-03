@@ -39,13 +39,20 @@ int main(int argc, char *argv[])
   }
   file.close();
 
-  const long cluster_count = 3;
+  const long cluster_count = 8;
   auto kmeans_clusters = kMeans(horse_graph, cluster_count);
 
   const long distance_k = 10;
   auto distK_clusters = DistanceKCliques(horse_graph, distance_k);
 
-  KernelClustering(horse_graph, cluster_count);
+  auto kernel_clusters = KernelClustering(horse_graph, cluster_count);
+
+  std::cout << "Cluster Information for kMeans Algorithm:" << std::endl;
+  OutputClusterInformation(horse_graph, kmeans_clusters);
+  std::cout << "Cluster Information for Distance-k Algorithm:" << std::endl;
+  OutputClusterInformation(horse_graph, distK_clusters);
+  std::cout << "Cluster Information for Kernel Clustering Algorithm:" << std::endl;
+  OutputClusterInformation(horse_graph, kernel_clusters);
 
   return 0;
 }
