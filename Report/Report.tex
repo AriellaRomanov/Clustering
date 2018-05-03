@@ -25,7 +25,9 @@ The author has earned her Bachelor's of Science degree in Computer Science from 
 
 \newpage
 \section{Executive Summary}
-This project aims to explore the potential of clustering algorithms for aiding in the partitioning of large graphs for frequent subgraph mining. Partitioning is important as many graphs of interest cannot be held in the memory of a single machine, and so must be spread across many machines in order to be processed. Partitioning risks losing data that spans across multiple partitions, requiring an intelligent partitioning process in order to minimize. This project explores k-means clustering, distance-k clustering, and multilevel kernel clustering algorithms, as they apply to data mining. The clusters produced by the algorithms are evaluated for quality based on cluster density and the maximal shortest path within the cluster.
+This project aims to explore the potential of clustering algorithms for aiding in the partitioning of large graphs for frequent subgraph mining. Partitioning is important as many graphs of interest cannot be held in the memory of a single machine, and so must be spread across many machines in order to be processed. Partitioning risks losing data that spans across multiple partitions, requiring an intelligent partitioning process in order to minimize. 
+\newline\newline
+This project explores k-means clustering, distance-k clustering, and multilevel kernel clustering algorithms, as they apply to partitioning large transaction graphs in data mining. The clusters produced by the algorithms are evaluated for quality based on cluster density and the maximal shortest path within the cluster. The algorithms were tested on a toy data set built from publicly available Arabian horse pedigree papers, such that each edge represents a child-parent relationship. The algorithms were written for undirected, weighted graphs, but could be modified for directed graphs. Furthermore, research needs to be done to create a parallelized or distributed version of these algorithms so that they can process graphs that do not fit within the memory of a single machine.
 
 \newpage
 \section{Introduction}
