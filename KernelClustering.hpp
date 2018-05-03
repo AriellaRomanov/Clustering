@@ -245,12 +245,8 @@ std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long 
 template <typename T>
 std::map<long, Cluster> KernelClustering(const UndirectedGraph<T>& graph, const long cluster_count)
 {
-  std::cout << "KernelClustering on graph size " << graph.GetSize() << std::endl;
   auto versions = Coarsening(graph, cluster_count);
-  std::cout << "Version count: " << versions.size() << " | Final size: " << versions.back().graph.GetSize() << std::endl;
   auto clusters = kMeans(versions.back().graph, cluster_count);
-  std::cout << "kMeans Complete." << std::endl;
   clusters = Refinement(versions, clusters);
-  std::cout << "Cluster count: " << clusters.size() << std::endl;
   return clusters;
 }
