@@ -4,6 +4,7 @@
 \usepackage{titling}
 \usepackage{pgfplots}
 \usepackage{filecontents}
+\usepackage{appendix}
 \usepackage[a4paper, total={6in, 8in}]{geometry}
 
 \title{Clustering for Graph Partitioning}
@@ -51,6 +52,7 @@ The driving force of the program is a UndirectedGraph class, which is built from
 \newline\newline
 While C++ has a basic vector class, it does not have any linear algebra functions attached to that class. Instead, a custom vector class was developed for use, which the basic Matrix class was then built on top of. This combination allows for full flexibility to implement any of the needed linear algebra operations directly into the class. This was designed to be used by a spectral clustering algorithm, but that algorithm has instead been removed from the scope of this project. The SymmetricalMatrix class inherits from the Matrix class, but was given more efficient memory management, to take advantage of the fact the half of the values in the matrix are identical.
 \newline\newline
+
 \begin{figure}[!htb]
 \begin{center}
 	\includegraphics[height=10em]{uml.png}
@@ -58,16 +60,47 @@ While C++ has a basic vector class, it does not have any linear algebra function
 	\label{uml}
 \end{center}
 \end{figure}
-\newline\newline
+
 The UndirectedGraph class includes a SymmetricalMatrix object as a private member. This matrix is used to store the adjacency matrix of the undirected graph. The advantage to this method is realized in very dense graphs, as it becomes more efficient to store and to work with than other representations, which often involve long lists of node id pairs. Unfortunately, the graph used in the testing was not a particularly dense graph, and so this particular benefit did not come to light. However, dense graphs are a prioritized area of interest in the data mining field, and so it was important to consider that beyond this project.
+\newline\newline
+The C++ data type std::set was chosen to represent the clusters within the functional algorithms. The class type has a strict enforcement of no duplication within a set and supports simple insertion, deletion, and search operators. Each node was represented in the cluster by it's id in the original graph, not by it's string label, which is more efficient as string operations are cumbersome and slow.
+
+\subsection{Algorithms}
+
+\subsubsection{K-Means}
+The k-means function was broken into five different sub-functions. This helps improve readability of the code and allowed some sections to be reused for the other algorithms. The pseudo-code for the k-means algorithm is represented in Appendix \ref{appendix:kmeans} and the pseudo-code for the k-means centroid initialization is presented in Appendix \ref{appendix:kmeansinit}\cite{kmeans}.
+
+\subsubsection{Distance-K}
+\subsubsection{Kernel Clustering}
 
 \newpage
 \section{Experimental Results}
 
+\newpage
+\appendix
+\appendixpage
+\addappheadtotoc
+
+\section{Pseudo-Code for the K-Means Algorithm}
+\label{appendix:kmeans}
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[height=25em]{kmeans.png}
+	\caption{Pseudo-Code for the K-Means Algorithm}
+	\label{uml}
+\end{center}
+\end{figure}
 
 \newpage
-\section{Appendix A}
-
+\section{Pseudo-Code for the K-Means Cluster Initialization Algorithm}
+\label{appendix:kmeansinit}
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[height=25em]{kmeans_init.png}
+	\caption{Pseudo-Code for the K-Means Cluster Initialization Algorithm}
+	\label{uml}
+\end{center}
+\end{figure}
 
 \newpage
 \begin{thebibliography}{9}
