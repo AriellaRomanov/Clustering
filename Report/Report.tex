@@ -27,13 +27,13 @@ The author has earned her Bachelor's of Science degree in Computer Science from 
 \section{Executive Summary}
 This project aims to explore the potential of clustering algorithms for aiding in the partitioning of large graphs for frequent subgraph mining. Partitioning is important as many graphs of interest cannot be held in the memory of a single machine, and so must be spread across many machines in order to be processed. Partitioning risks losing data that spans across multiple partitions, requiring an intelligent partitioning process in order to minimize. 
 \newline\newline
-This project explores k-means clustering, distance-k clustering, and multilevel kernel clustering algorithms, as they apply to partitioning large transaction graphs in data mining. The clusters produced by the algorithms are evaluated for quality based on cluster density and the maximal shortest path within the cluster. The algorithms were tested on a toy data set built from publicly available Arabian horse pedigree papers, such that each edge represents a child-parent relationship. The algorithms were written for undirected, weighted graphs, but could be modified for directed graphs.
+This project explores k-means clustering, distance-k clustering, and multilevel kernel clustering algorithms, as they apply to partitioning large single graphs in data mining. The clusters produced by the algorithms are evaluated for quality based on cluster density and the maximal shortest path within the cluster. The algorithms were tested on a toy data set built from publicly available Arabian horse pedigree papers, such that each edge represents a child-parent relationship. The algorithms were written for undirected, weighted graphs, but could be modified for directed graphs.
 \newline\newline
 Further research needs to be done to create and evaluate parallelized or distributed versions of these algorithms, so that they can process graphs that do not fit within the memory of a single machine.
 
 \newpage
 \section{Introduction}
-This paper is presenting basic research done to examine if clustering could assist in frequent subgraph mining for very large transaction graph settings. The size and density of many graphs of interest, particularly those involved with social media or chemistry, is a roadblock for efficiently dealing with them. Especially in situations were the graph is too large to fit in a single machine, we want to examine if clustering of the data can help make the process manageable.
+This paper is presenting basic research done to examine if clustering could assist in frequent subgraph mining for very large single graph settings. The size and density of many graphs of interest, particularly those involved with social media or chemistry, is a roadblock for efficiently dealing with them. Especially in situations were the graph is too large to fit in a single machine, we want to examine if clustering of the data can help make the process manageable.
 
 \subsection{Graph Data Mining}
 Graph data mining is a field of study concerned with extracting data from graphs. Most often, this data takes the form of a subgraph that has a structure that makes it interesting.
@@ -52,12 +52,15 @@ A graph also has a measurable density. Density is measured as
 for undirected graphs. They symbol $\vert$x$\vert$ means the number of items in that set. So, $\vert$E$\vert$ would refer to the total number of edges. The number of edges connected to a single node, n, is known as degree and is also marked as deg(n).
 
 \subsubsection{Frequent Subgraph Mining}
+Frequent subgraph mining (FSM) is a common method for determining which structures in the graph occur most often. There are many different algorithms for doing this, which are out of scope for this project.
+\newline\newline
+There are two overarching categories that a FSM algorithm may fall into. The algorithm is either meant to 
 
 \subsection{Graph Partitioning}
 
 \newpage
 \section{Project Specifications}
-This project focuses on comparing the quality of the clusters produced by each algorithm. Quality is a combined score  of the cluster density and the maximum shortest path within the cluster. By comparing the clustering ability of the algorithms on a small graph, inferences about the quality of partitions made on a larger transaction graph can be made. Note that further research should be done into parallelized and distributed versions of these algorithms, but that is beyond the scope of this project.
+This project focuses on comparing the quality of the clusters produced by each algorithm. Quality is a combined score  of the cluster density and the maximum shortest path within the cluster. By comparing the clustering ability of the algorithms on a small graph, inferences about the quality of partitions made on a larger graph can be made. Note that further research should be done into parallelized and distributed versions of these algorithms, but that is beyond the scope of this project.
 \newline\newline
 All code was written in the C++ programming language. The program accepts as input a properly formatted document file that describes the graph to execute. The program outputs the basic statistics of the clusters formed by each of the three algorithms, as well as a list of which nodes are in which cluster. The statistics reported include the number of clusters formed, the number of elements in each cluster, the density of each cluster, and the diameter of each cluster.
 \newline\newline
