@@ -13,6 +13,7 @@ class UndirectedGraph
     UndirectedGraph(const UndirectedGraph<T>& copy);
     UndirectedGraph(UndirectedGraph<T>&& source);
     ~UndirectedGraph();
+    UndirectedGraph<T>& operator=(const UndirectedGraph<T>& copy);
 
     inline long GetSize() const { return graph_size; }
     std::string GetNodeLabel(const long idx) const;

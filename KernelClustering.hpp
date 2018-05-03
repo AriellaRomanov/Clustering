@@ -4,9 +4,31 @@
 #include <stdlib.h>
 #include <vector>
 
-template<typename T>
+template <typename T>
+void RefinementAlgorithm(const UndirectedGraph<T>& graph, std::map<long, Cluster>& starting_clusters)
+{
+
+}
+
+template <typename T>
 std::map<long, Cluster> Refinement(std::vector<UndirectedGraph<T>> versions, std::map<long, Cluster> starting_clusters)
 {
+  auto current_graph = versions.back();
+  versions.pop_back();
+  RefinementAlgorithm(current_graph, starting_clusters);
+
+  while (static_cast<long>(versions.size())> 0)
+  {
+    // expand graph
+    auto old_graph = current_graph;
+    current_graph = versions.back();
+    versions.pop_back();
+
+
+
+    RefinementAlgorithm(current_graph, starting_clusters);
+  }
+
   return starting_clusters;
 }
 

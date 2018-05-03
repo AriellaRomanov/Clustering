@@ -30,6 +30,18 @@ UndirectedGraph<T>::~UndirectedGraph()
 }
 
 template <typename T>
+UndirectedGraph<T>& UndirectedGraph<T>::operator=(const UndirectedGraph<T>& copy)
+{
+  delete[] node_labels;
+  graph_size = copy.graph_size;
+  node_labels = new std::string[graph_size];
+  for (long i = 0; i < graph_size; i++)
+    node_labels[i] = copy.node_labels[i];
+  matrix = copy.matrix;
+  return *this;
+}
+
+template <typename T>
 std::string UndirectedGraph<T>::GetNodeLabel(const long idx) const
 {
   if (idx > graph_size)
