@@ -85,7 +85,6 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
 
   while (static_cast<long>(versions.size()) > 0)
   {
-    //std::cout << "-----REFINING-----" << std::endl;
     // expand graph
     auto old_graph = current_graph;
     current_graph = versions.back();
@@ -101,7 +100,6 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
       {
         auto node_a = old_graph.merges.at(supernode).first;
         auto node_b = old_graph.merges.at(supernode).second;
-        //std::cout << supernode << "->(" << node_a << "," << node_b << ")" << std::endl;
 
         // get the cluster id for the supernode
         for (const auto& cl : starting_clusters)
@@ -127,7 +125,6 @@ std::map<long, Cluster> Refinement(std::vector<gVersion<T>> versions, std::map<l
 template <typename T>
 std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long cluster_count)
 {
-  std::cout << "-----COARSENING(" << graph.GetSize() << ")-----" << std::endl;
   std::vector<gVersion<T>> versions;
   gVersion<T> _v;
   _v.graph = graph;
@@ -156,10 +153,8 @@ std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long 
       }
     }
 
-    //std:cout << "node_neighbors: " << node_neighbors.size() << std::endl;
     if (static_cast<long>(node_neighbors.size()) == 0)
     {
-      //std::cout << "(" << node << "," << node << ")->" << merged_nodes.size() << std::endl;
       merged_nodes.emplace_back(node, node);
     }
     else
@@ -177,7 +172,6 @@ std::vector<gVersion<T>> Coarsening(const UndirectedGraph<T>& graph, const long 
         }
       }
 
-      //std::cout << "(" << node << "," << max_neighbor << ")->" << merged_nodes.size() << std::endl;
       merged_nodes.emplace_back(node, max_neighbor);
       unmarked_nodes.erase(max_neighbor);
     }
@@ -256,29 +250,5 @@ std::map<long, Cluster> KernelClustering(const UndirectedGraph<T>& graph, const 
   auto versions = Coarsening(graph, cluster_count);
   auto clusters = kMeans(versions.back().graph, cluster_count);
   clusters = Refinement(versions, clusters);
-
-  long _nnodes = 0;
-  for (const auto& _cl_ : clusters)
-    for (const auto& _nn : _cl_.second)
-      _nnodes++;
-  //std::cout << "R1: " << _nnodes << std::endl;
-
-  // for (auto itr = clusters.begin(); itr != clusters.end(); ++itr)
-  // {
-  //   if (itr->second.size() == 0)
-  //   {
-  //     clusters.erase(itr);
-  //     itr = clusters.begin();
-  //   }
-  // }
-  for (auto& cl : clusters)
-    cl.second.insert(cl.first);
-
-  _nnodes = 0;
-  for (const auto& _cl_ : clusters)
-    for (const auto& _nn : _cl_.second)
-      _nnodes++;
-  //std::cout << "R2: " << _nnodes << std::endl;
-
   return clusters;
 }
