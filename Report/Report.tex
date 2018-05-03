@@ -76,6 +76,12 @@ At each level of refinement of nodes, the clusters are also refined. The algorit
 \newpage
 \section{Experimental Results}
 
+\subsection{Experiment Setup}
+The experiment run was a graph with 64 nodes of Arabian horse pedigree relationships, where an edge between two nodes indicated a parent-child relationship. Due to the fact that only one of the tested algorithms had a random element to it, multiple iterations were not recorded.
+
+\subsection{Results Analysis}
+The results of each algorithm can be seen in Figure \ref{results_data}. Our standards for quality involve balancing the average cluster density and size against average cluster diameter. Ideally, the algorithms should find large and dense clusters, with a short path to all nodes in the cluster.
+
 \begin{figure}[!htb]
 \begin{center}
 	\includegraphics[height=7em]{data.png}
@@ -83,6 +89,13 @@ At each level of refinement of nodes, the clusters are also refined. The algorit
 	\label{results_data}
 \end{center}
 \end{figure}
+
+It can be seen in the results that while Kernel Clustering returned the largest clusters, they also had the largest diameter, and a relatively low density. So rather than tight clusters, it found very loose clusters. Conversely, K-Means easily had the best density within it's clusters, and was on the high end of the cluster size. Again, however, it tended on the high end of the cluster diameters.
+\newline\newline
+The Distance-k algorithm was notable in its very low average cluster diameter, but when examining the clusters themselves, the algorithm placed many nodes in clusters of one or two, thus very much lowering all three values collectively.
+
+\subsection{Difficulties}
+One of the main difficulties of this program was evaluating the calculated clusters for correctness. A visual aid tool was not developed, so all clusters had to be manually checked against the original matrix and drawn by hand during the development and testing process. For continued work, a visualization tool would need to be integrated or developed.
 
 \newpage
 \appendix
