@@ -54,9 +54,17 @@ for undirected graphs. They symbol $\vert$x$\vert$ means the number of items in 
 \subsubsection{Frequent Subgraph Mining}
 Frequent subgraph mining (FSM) is a common method for determining which structures in the graph occur most often. There are many different algorithms for doing this, which are out of scope for this project.
 \newline\newline
-There are two overarching categories that a FSM algorithm may fall into. The algorithm is either meant to 
+There are two overarching categories that a FSM algorithm may fall into. The algorithm is either meant to handle a single graph or a set of transaction graphs. For this project, we will only be concerned with single graphs, with particular interest in graphs which cannot fit within memory of one machine. While the intent of this project could be applied to a single graph from a transaction setting, that is not within the scope of this project.
 
 \subsection{Graph Partitioning}
+When dealing with a graph that is too large to fit within the memory of a single machine, some mechanism must be devised for dividing the graph among multiple machines. This process is known as graph partitioning.
+\newline\newline
+Partitioning a graph is most frequently done by removing edges from the graph until there are multiple individual connected components. When doing this, it is important to remove as few edges as possible, but also make the partitions close to equal sized. One of the issues with doing a partition is that removing those edges makes it difficult to find frequent subgraphs that may span across multiple partitions.
+
+\subsection{Clustering}
+The goal of clustering is to divide a data set into logical groups of things that are similar. One option for defining similarity is distance, which would then allow us to apply clustering to large single graphs that would hopefully give as an approximation of how to partition the data
+\newline\newline
+The three algorithms we will be testing in this paper are k-means, distance-k clustering, and kernel clustering. K-means is a traditional algorithm that works off of distance between elements \cite{kmeans}, which we can define as the shortest path between two nodes. Distance-k is meant for graphs and clusters based on degree of the nodes \cite{distK}. Kernel clustering is a three step process where you make the data more coarse, eventually allowing the graph to fit on one machine, applying a clustering algorithm, and then refining the data again back to the full size \cite{kernel}.
 
 \newpage
 \section{Project Specifications}
