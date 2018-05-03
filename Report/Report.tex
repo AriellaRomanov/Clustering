@@ -45,7 +45,21 @@ In the future, the program should be modified to accept a parameter file that ca
 
 \newpage
 \section{Detailed Design}
-The drivi
+The program was designed in a combination of the object-oriented method and the functional method of programming.
+\subsection{Class Objects}
+The driving force of the program is a UndirectedGraph class, which is built from a SymmetricalMatrix class. The data is represented as an undirected graph because the project is looking for relationships between the horses, and we do not care about which horse is the parent. This then allows us to use a SymmetricalMatrix class, which is much more memory efficient to use than a full matrix class would be, as only either the upper or lower triangle of the matrix actually needs to be stored.
+\newline\newline
+While C++ has a basic vector class, it does not have any linear algebra functions attached to that class. Instead, a custom vector class was developed for use, which the basic Matrix class was then built on top of. This combination allows for full flexibility to implement any of the needed linear algebra operations directly into the class. This was designed to be used by a spectral clustering algorithm, but that algorithm has instead been removed from the scope of this project. The SymmetricalMatrix class inherits from the Matrix class, but was given more efficient memory management, to take advantage of the fact the half of the values in the matrix are identical.
+\newline\newline
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[height=10em]{uml.png}
+	\caption{UML Diagram for Relationships between Class Types}
+	\label{uml}
+\end{center}
+\end{figure}
+\newline\newline
+The UndirectedGraph class includes a SymmetricalMatrix object as a private member. This matrix is used to store the adjacency matrix of the undirected graph. The advantage to this method is realized in very dense graphs, as it becomes more efficient to store and to work with than other representations, which often involve long lists of node id pairs. Unfortunately, the graph used in the testing was not a particularly dense graph, and so this particular benefit did not come to light. However, dense graphs are a prioritized area of interest in the data mining field, and so it was important to consider that beyond this project.
 
 \newpage
 \section{Experimental Results}
